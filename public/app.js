@@ -108,7 +108,7 @@ class ImdbApp extends LitElement {
         </div>
       </main>
       <footer>
-        <p><a href="https://github.com/circuit/imdb-collaboration">github.com/circuit/imdb-collaboration</a></p>
+        <p><a target="_blank" href="https://github.com/circuit/imdb-collaboration">github.com/circuit/imdb-collaboration</a></p>
       </footer>
     `;
   }
