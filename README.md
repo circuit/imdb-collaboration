@@ -1,13 +1,13 @@
 # imdb-collaboration
 
-This application showcases how easy the Circuit JS SDK can be integrated into a website. The website allows users to collaborate on different movies/shows.
+This application showcases how easy the Circuit JS SDK can be integrated into a website. This website allows users to collaborate on different movies or TV shows.
 
-Live app at [http://rawgit.com/circuit/imdb-collaboration/master/index.html]()
+Live app at [https://rawgit.com/circuit/imdb-collaboration/master/index.html]()
 
-This app is built using web components, specifically the [lit-html](https://github.com/PolymerLabs/lit-html) library built by the Polymer team. In addition [lit-html-element](https://github.com/kenchris/lit-element) is used simplify the code.
+This app is built using web components, specifically the [lit-html](https://github.com/PolymerLabs/lit-html) library built by the Google Polymer team. In addition [lit-html-element](https://github.com/kenchris/lit-element) is used to simplify the code.
 
 ## Limitations in this first version
-* Only 3 fixed TV shows to collaborate on
+* Only 4 fixed TV shows to collaborate on
 * Login only with the 3 accounts listed below sign in button
 
 ## Future
@@ -19,9 +19,10 @@ This app is built using web components, specifically the [lit-html](https://gith
 * Show analytics data of usage
 * Use a module bundler like webpack rather than serving node_modules.
 
-## Run
+## Run locally
 Use any webserver and open the index.html file. E.g. using [http-server](https://www.npmjs.com/package/http-server)
 ```bash
+  git clone https://github.com/circuit/imdb-collaboration.git
   cd imdb-collaboration
   http-server -p 3200
   // browse to http://localhost:3200
