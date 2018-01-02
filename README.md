@@ -2,7 +2,7 @@
 
 This application showcases how easy the Circuit JS SDK can be integrated into a website. The website allows users to collaborate on different movies/shows.
 
-Live app at [https://imdb.circuitsandbox.com]()  ... soon
+Live app at [http://rawgit.com/circuit/imdb-collaboration/master/index.html]()
 
 This app is built using web components, specifically the [lit-html](https://github.com/PolymerLabs/lit-html) library built by the Polymer team. In addition [lit-html-element](https://github.com/kenchris/lit-element) is used simplify the code.
 
@@ -19,13 +19,10 @@ This app is built using web components, specifically the [lit-html](https://gith
 * Show analytics data of usage
 * Use a module bundler like webpack rather than serving node_modules.
 
-## Install
-```bash
-  git clone https://github.com/circuit/imdb-collaboration.git
-  npm install
-```
-
 ## Run
+Use any webserver and open the index.html file. E.g. using [http-server](https://www.npmjs.com/package/http-server)
 ```bash
-  npm start
+  cd imdb-collaboration
+  http-server -p 3200
+  // browse to http://localhost:3200
 ```

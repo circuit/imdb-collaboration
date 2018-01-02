@@ -1,7 +1,11 @@
 'use strict';
 
-import { LitElement, html } from './lit-html-element/lit-element.js';
+import { domain } from './config.js';
+import { LitElement, html } from './lit-element.js';
 
+/**
+ * Circuit sign in state
+ */
 const SigninState = {
   SIGNED_OUT: 'SIGNED_OUT',
   SIGNED_IN: 'SIGNED_IN',
@@ -9,6 +13,10 @@ const SigninState = {
   NONE: 'NODE'
 }
 
+/**
+ * Circuit chat component. Handles Circuit OAuth sign-in, displays
+ * messages of corresponding conversation and allows posting texts.
+ */
 class CircuitChat extends LitElement {
   constructor() {
     super();
@@ -36,13 +44,14 @@ class CircuitChat extends LitElement {
     }
   }
 
+  // Web Components life cycle event when element is inserted into a document
   connectedCallback() {
     super.connectedCallback();
 
     // Initialize the Circuit SDK client instance
     this.client = new Circuit.Client({ client_id: this.clientId });
 
-    // Listen for new posts and render them for this conversation
+    // Listen for new posts on this conversation and render them
     this.client.addEventListener('itemAdded', e => {
       if (e.item.convId !== this.convId) {
         return;
@@ -64,8 +73,7 @@ class CircuitChat extends LitElement {
         this.invalidate();
       });
 
-    // Update timestamps every minute since they are shown relative.
-    // E.g. "5 min ago"
+    // Update timestamps every minute since they are shown relative
     setTimeout(() => this.invalidate(), 60 * 1000);
   }
 
@@ -74,13 +82,13 @@ class CircuitChat extends LitElement {
   }
 
   static get observedAttributes() {
-    // Use an attribute for the conversation ID so that it can be observed
+    // Observe the conversation ID attribute
     return ['conversation'];
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
     if (attr === 'conversation') {
-      // New conversation to be used for chat
+      // Switched conversation, get posts for conversation and render
       this.convId = newValue;
       if (this.isConnected) {
         this.getPosts()
@@ -90,7 +98,7 @@ class CircuitChat extends LitElement {
     }
   }
 
-  // Sign in and when successful get the posts
+  // Sign in and when successful get posts and render
   signin() {
     this.signinState = SigninState.SIGNING_IN;
     this.client.logon()
@@ -112,15 +120,12 @@ class CircuitChat extends LitElement {
   getPosts() {
     this.loading = true;
     return this.client.getConversationItems(this.convId, {numberOfItems: 50})
-      .then(items =>
-      this.posts = items.reverse().filter(item => !!item.text))
-      .then(() =>
-      this.updateUserCache())
-      .then(() =>
-      this.loading = false)
+      .then(items => this.posts = items.reverse().filter(item => !!item.text))
+      .then(() => this.updateUserCache())
+      .then(() => this.loading = false)
   }
 
-  // Get the user object for the creator so we have the name and avatar
+  // Get the user objects for the creators to get name and avatar
   updateUserCache(posts) {
     posts = posts || this.posts;
     const newUserIds = posts
@@ -161,7 +166,6 @@ class CircuitChat extends LitElement {
         button[name="signin"] {
           margin-bottom: 10px;
         }
-
         .new-post {
           display: flex;
           margin-top: 15px;
@@ -199,11 +203,11 @@ class CircuitChat extends LitElement {
           color: rgb(62, 69, 81);
         }
         .sender img {
-            vertical-align: middle;
-            margin-right: 7px;
-            width: 24px;
-            height: 24px;
-            border-radius: 12px;
+          vertical-align: middle;
+          margin-right: 7px;
+          width: 24px;
+          height: 24px;
+          border-radius: 12px;
         }
         .time {
           font-size: 13px;
@@ -216,7 +220,7 @@ class CircuitChat extends LitElement {
 
       ${this.signinState === SigninState.SIGNED_OUT ?
         html`<div class="signin">
-          <button name="signin" on-click=${() => this.signin()} type="button" class="btn btn-outline-primary btn-sm">Sign in with Circuit</button>
+          <button name="signin" type="button" on-click=${() => this.signin()} class="btn btn-outline-primary btn-sm">Sign in with Circuit</button>
           <div>Use one of these test accounts:</div>
           <div>kim.jackson@mailinator.com</div>
           <div>maeva.barnaby@mailinator.com</div>
@@ -231,14 +235,14 @@ class CircuitChat extends LitElement {
       ${this.signinState === SigninState.SIGNED_IN && !this.loading ?
         html`<div class="new-post">
           <textarea id="message" rows="2" placeholder="Enter a comment"></textarea>
-          <button name="post" on-click=${() => this.post()} type="button" class="btn btn-outline-primary btn-sm">Post</button>
+          <button name="post" type="button" on-click=${() => this.post()} class="btn btn-outline-primary btn-sm">Post</button>
         </div>
         <div>
           ${this.posts.map(post => html`
             <div class="post">
               <div class="header">
                 <span class="sender">
-                  <a target="_blank" href=${'https://circuitsandbox.net/#/user/' + this.users[post.creatorId].userId}>
+                  <a target="_blank" href=${`https://${domain}/#/user/${this.users[post.creatorId].userId}`}>
                     <img src=${this.users[post.creatorId].avatar}>
                     ${post.creatorId === this.client.loggedOnUser.userId ? html`You:` : html`${this.users[post.creatorId].displayName}`}
                   </a>

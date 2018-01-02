@@ -1,8 +1,13 @@
 'use strict';
 
-import { LitElement, html } from './lit-html-element/lit-element.js';
+import { domain } from './config.js';
+import { LitElement, html } from './lit-element.js';
 
-class ImdbNav extends LitElement {
+/**
+ * Navigation component. Shows TV show links and logged on user
+ * with avatar.
+ */
+class ImdbHeader extends LitElement {
   static get properties() {
     return {
       shows: {
@@ -17,6 +22,9 @@ class ImdbNav extends LitElement {
       }
     }
   }
+
+  // Due to a bug in the SDK, user.avatar is missing and we need to build it ourselves using smallImageUri
+  get avatar() { return `https://${domain}/fileapi/${this.user.userId}_s.jpg?fileid=${this.user.smallImageUri}`; }
 
   render() {
     return html`
@@ -45,8 +53,8 @@ class ImdbNav extends LitElement {
         ${this.user ? html`
           <ul class="nav navbar-nav navbar-right user">
             <li class="nav-item">
-              <a target="_blank" class="nav-link" href="${'https://circuitsandbox.net/#/user/' + this.user.userId}">
-                <img src="${'https://circuitsandbox.net/fileapi/' + this.user.userId + '_s.jpg?fileid=' + this.user.smallImageUri}">${this.user.displayName}
+              <a target="_blank" class="nav-link" href="${`https://${domain}/#/user/${this.user.userId}`}">
+                <img src="${this.avatar}">${this.user.displayName}
               </a>
             </li>
           </ul>
@@ -56,4 +64,4 @@ class ImdbNav extends LitElement {
   }
 }
 
-customElements.define('imdb-nav', ImdbNav.withProperties());
+customElements.define('imdb-header', ImdbHeader.withProperties());
