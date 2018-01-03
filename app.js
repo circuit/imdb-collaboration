@@ -24,6 +24,9 @@ class ImdbApp extends LitElement {
   // Lookup show on navigation change
   routeChange() {
     const id = location.hash.substring(2);
+    if (!id) {
+      return;
+    }
     let show = shows.find(show => show.name === decodeURIComponent(id));
     if (!show) {
       console.error(`Not a valid show: ${id}`);
