@@ -74,7 +74,7 @@ class CircuitChat extends LitElement {
       });
 
     // Update timestamps every minute since they are shown relative
-    setTimeout(() => this.invalidate(), 60 * 1000);
+    setInterval(() => this.invalidate(), 60 * 1000);
   }
 
   get isConnected() {
