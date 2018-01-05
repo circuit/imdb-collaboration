@@ -2,7 +2,7 @@
 
 This application showcases how easy the Circuit JS SDK can be integrated into a website. This website allows users to collaborate on different movies or TV shows.
 
-Live app at https://rawgit.com/circuit/imdb-collaboration/v1.0/index.html
+Live app at https://rawgit.com/circuit/imdb-collaboration/master/index.html
 
 This app is built using web components, specifically the [lit-html](https://github.com/PolymerLabs/lit-html) library built by the Google Polymer team. In addition [lit-html-element](https://github.com/kenchris/lit-element) is used to simplify the code.
 
