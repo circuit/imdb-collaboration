@@ -26,7 +26,6 @@ This app is built using web components, specifically the [lit-html](https://gith
 * Show analytics data of usage
 
 ## Run locally
-Use any webserver and open the index.html file. E.g. using [http-server](https://www.npmjs.com/package/http-server)
 ```bash
   git clone https://github.com/circuit/imdb-collaboration.git
   cd imdb-collaboration
