@@ -1,5 +1,6 @@
 'use strict';
 
+const request = require('request');
 const Circuit = require('circuit-sdk');
 const config = require('./config.json');
 
@@ -15,6 +16,34 @@ module.exports = app => {
   client.logon()
     .then(user => bot = user)
     .catch(console.error);
+
+  /**
+   * Search omdbapi for movie and TV show titles. Proxied here since omdbapi
+   * doesn't support https
+   */
+  app.get('/search/:query', (req, res) => {
+    request(`http://www.omdbapi.com/?apikey=${config.omdbapikey}&s=${req.params.query}`, { json: true }, (err, resp, body) => {
+      if (resp.statusCode === 200) {
+        res.status(200).send(body);
+        return;
+      }
+      res.status(resp.statusCode).send(err);
+    });
+  });
+
+  /**
+   * Get details of movie using imdb ID. Proxied here since omdbapi
+   * doesn't support https
+   */
+  app.get('/details/:id', (req, res) => {
+    request(`http://www.omdbapi.com/?apikey=${config.omdbapikey}&i=${req.params.id}`, { json: true }, (err, resp, body) => {
+      if (resp.statusCode === 200) {
+        res.status(200).send(body);
+        return;
+      }
+      res.status(resp.statusCode).send(err);
+    });
+  });
 
   /**
    * Search conversation by title. Create conversation if it doesn't exist yet.

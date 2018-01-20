@@ -1,6 +1,7 @@
 'use strict';
 
 import { html, render } from 'lit-html/lib/lit-extended';
+import debounce from 'debounce';
 
 /**
  * Search component. Searches for movies and TV shows on http://www.omdbapi.com/
@@ -12,14 +13,15 @@ class ImdbSearch extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
-    this.results = [];
+    this.result = {};
+    this.searchDebounced = debounce(query => this.search(query), 1000);
   }
 
   // Properties
   set apikey(v) { this._apikey = v; }
   get apikey() { return this._apikey; }
-  set results(v) { this._results = v; this.invalidate(); }
-  get results() { return this._results; }
+  set result(v) { this._result = v; this.invalidate(); }
+  get result() { return this._result; }
 
   connectedCallback() {
     requestAnimationFrame(() => {
@@ -28,28 +30,31 @@ class ImdbSearch extends HTMLElement {
     });
   }
 
-  search() {
+  // Search immediate on <enter>, Clear immediate on <no input>,
+  // otherwise debounce
+  onkeypress(e) {
     const searchTerm = this.shadowRoot.querySelector('input').value;
-    fetch(`http://www.omdbapi.com/?apikey=${this.apikey}&s=${searchTerm}`)
+    if (!searchTerm) {
+      this.result = {};
+      this.searchDebounced.clear();
+    } else if (e.keyCode === 13) {
+      this.searchDebounced.flush();
+    } else {
+      this.searchDebounced(searchTerm);
+    }
+  }
+
+  // Search
+  search(query) {
+    console.log('Execute search with term: ' + query);
+    fetch(`/search/${query}`)
       .then(res => res.json())
-      .then(res => {
-        if (res.Search) {
-          this.results = res.Search;
-        }
-      })
+      .then(res => this.result = res)
       .catch(console.error);
   }
 
   select(imdbID) {
     this.dispatchEvent(new CustomEvent('select', { detail: imdbID }));
-  }
-
-  onkeypress(e) {
-    if (!e.target.value) {
-      this.results = [];
-    } else if (e.keyCode === 13) {
-      this.search();
-    }
   }
 
   invalidate() {
@@ -80,9 +85,9 @@ class ImdbSearch extends HTMLElement {
             <input class="mt-4 mb-4 w-100" type="text" placeholder="Search movie or TV show" on-keyup=${e => this.onkeypress(e)}>
           </div>
         </div>
-        <div class="row justify-content-md-center">
+        <div class="row justify-content-md-center pb-5">
           <div class="col-md-8">
-            ${this.results.map(res => html`
+            ${this.result.Search && this.result.Search.map(res => html`
               <div class="media p-2" on-click=${() => this.select(res.imdbID)}>
                 <img class="d-flex mr-3" height="100px" src=${res.Poster}>
                 <div class="media-body mt-2">
@@ -93,6 +98,11 @@ class ImdbSearch extends HTMLElement {
                 </div>
               </div>
             `)}
+            ${this.result.Error ? html`
+              <div class="">
+                ${this.result.Error}
+              </div>
+            ` : ''}
           </div>
         </div>
       </div>

@@ -51,7 +51,7 @@ class ImdbApp extends HTMLElement {
     }
 
     // Get details of selected show
-    const showPromise = fetch(`http://www.omdbapi.com/?apikey=${omdbapikey}&i=${id}`)
+    const showPromise = fetch(`/details/${id}`)
       .then(res => res.json());
 
     // Lookup conversation using Circuit search by conversation title
