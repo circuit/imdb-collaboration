@@ -1,10 +1,11 @@
 'use strict';
 
-import { client_id, omdbapikey } from './config.js';
+import { client_id } from './config.js';
 import { html, render } from 'lit-html/lib/lit-extended'
 import { ImdbHeader } from './modules/imdb-header.js';
 import { ImdbSearch } from './modules/imdb-search.js';
 import { CircuitChat } from './modules/circuit-chat.js';
+import PosterPlaceholder from '../assets/poster-placeholder.png';
 
 /**
  * Main app. Renders home page, handles route changes and
@@ -106,7 +107,6 @@ class ImdbApp extends HTMLElement {
       <main role="main">
         <imdb-search
           hidden=${!!this.show}
-          apikey="${omdbapikey}"
           on-select="${e => location.hash = e.detail}">
         </imdb-search>
 
@@ -120,7 +120,7 @@ class ImdbApp extends HTMLElement {
             </div>
             <div class="row">
               <div class="col-md-6">
-                <img class="poster" src="${this.show.Poster}">
+                <img class="poster" src="${this.show.Poster === 'N/A' ? PosterPlaceholder : this.show.Poster}">
                 <h5>Plot</h5><p>${this.show.Plot}</p>
                 <h5>Actors</h5><p>${this.show.Actors}</p>
                 <h5>Writer(s)</h5><p>${this.show.Writer}</p>

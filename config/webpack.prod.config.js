@@ -28,6 +28,12 @@ module.exports = {
           presets: ['latest'],
         },
       }],
+    },
+    {
+      test: /\.(png|svg|jpg|gif)$/,
+      use: [
+        'file-loader'
+      ]
     }],
   },
 };

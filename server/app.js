@@ -23,7 +23,10 @@ module.exports = app => {
    */
   app.get('/search/:query', (req, res) => {
     request(`http://www.omdbapi.com/?apikey=${config.omdbapikey}&s=${req.params.query}`, { json: true }, (err, resp, body) => {
-      if (resp.statusCode === 200) {
+      if (err) {
+        res.status(500).send(err);
+      }
+      if (!err && resp.statusCode === 200) {
         res.status(200).send(body);
         return;
       }
@@ -37,7 +40,7 @@ module.exports = app => {
    */
   app.get('/details/:id', (req, res) => {
     request(`http://www.omdbapi.com/?apikey=${config.omdbapikey}&i=${req.params.id}`, { json: true }, (err, resp, body) => {
-      if (resp.statusCode === 200) {
+      if (!err && resp.statusCode === 200) {
         res.status(200).send(body);
         return;
       }

@@ -2,11 +2,11 @@
 
 import { html, render } from 'lit-html/lib/lit-extended';
 import debounce from 'debounce';
+import PosterPlaceholder from '../../assets/poster-placeholder.png';
 
 /**
  * Search component. Searches for movies and TV shows on http://www.omdbapi.com/
  * API:
- *   apikey: API Key for omdbapi
  *   on-select: event with imdbID of selected show
  */
 class ImdbSearch extends HTMLElement {
@@ -18,8 +18,6 @@ class ImdbSearch extends HTMLElement {
   }
 
   // Properties
-  set apikey(v) { this._apikey = v; }
-  get apikey() { return this._apikey; }
   set result(v) { this._result = v; this.invalidate(); }
   get result() { return this._result; }
 
@@ -44,7 +42,7 @@ class ImdbSearch extends HTMLElement {
     }
   }
 
-  // Search
+  // Search for movie/show by title
   search(query) {
     console.log('Execute search with term: ' + query);
     fetch(`/search/${query}`)
@@ -53,6 +51,7 @@ class ImdbSearch extends HTMLElement {
       .catch(console.error);
   }
 
+  // Select a movie/show
   select(imdbID) {
     this.dispatchEvent(new CustomEvent('select', { detail: imdbID }));
   }
@@ -78,6 +77,10 @@ class ImdbSearch extends HTMLElement {
           background:rgba(0,0,0,0.07);
           cursor: pointer;
         }
+        .poster {
+          height: 100px;
+          max-width: 67px;
+        }
       </style>
       <div class="container">
         <div class="row justify-content-md-center">
@@ -89,7 +92,7 @@ class ImdbSearch extends HTMLElement {
           <div class="col-md-8">
             ${this.result.Search && this.result.Search.map(res => html`
               <div class="media p-2" on-click=${() => this.select(res.imdbID)}>
-                <img class="d-flex mr-3" height="100px" src=${res.Poster}>
+                <img class="d-flex mr-3 poster" src=${res.Poster === 'N/A' ? PosterPlaceholder : res.Poster}>
                 <div class="media-body mt-2">
                   <h5 class="mt-0">${res.Title}
                     <small class="text-muted">${res.Year}</small>
