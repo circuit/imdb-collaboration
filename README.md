@@ -23,6 +23,8 @@ This app is built using web components, specifically the [lit-html](https://gith
 * AI for bot to reply to simple questions
 * Allow commenting on post
 * Like/Unlike posts
+* Mention users
+* Post links, properly display line breaks
 * Show analytics data of usage
 
 ## Run locally
