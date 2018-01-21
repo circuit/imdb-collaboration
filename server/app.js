@@ -142,7 +142,7 @@ module.exports = app => {
   });
 
   /**
-   *
+   * Lookup a user to get its avatar and display name
    */
   app.get('/user/:userId', (req, res) => {
     const user = users[req.params.userId];
@@ -158,10 +158,9 @@ module.exports = app => {
       .catch(err => res.status(500).send(err));
   });
 
-
-  // Add user to conversation. The bot can only add users to the
-  // conversations the bot is a member of, but since the bot created
-  // these conversations that is the case.
+  /**
+   * Add user as member of the conversation.
+   */
   app.post('/join/:conv/:user', (req, res) => {
     client.addParticipant(req.params.conv, [req.params.user])
       .then(() => res.sendStatus(200))
