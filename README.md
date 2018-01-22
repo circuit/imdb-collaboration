@@ -8,6 +8,8 @@ Medium article at [https://medium.com/@rurscheler/imdb-collaboration-bot-c43fa57
 
 This app is built using web components, specifically the [lit-html](https://github.com/PolymerLabs/lit-html) library built by the Google Polymer team.
 
+> [Branch V1](https://github.com/circuit/imdb-collaboration/tree/v1) corresponds to the [first medium article](https://medium.com/@rurscheler/introducing-the-circuit-apis-f98285f470f0) without support for a bot
+
 ## Features
 * Search for movies or TV shows using [omdbapi.com](http://www.omdbapi.com)
 * Allow collaboration on any of the movies/shows using the [Circuit SDK](https://github.com/circuit-sdk)
