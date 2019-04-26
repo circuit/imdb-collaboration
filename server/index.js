@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = isDeveloping ? 3200 : process.env.PORT;
+const port = isDeveloping ? 3200 : (process.env.PORT || 8080);
 const app = express();
 // Start server app (bot)
 const circuit = require('./app')(app);
