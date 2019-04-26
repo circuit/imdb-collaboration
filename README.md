@@ -2,7 +2,7 @@
 
 This application shows how easy the Circuit JS SDK can be integrated into a website. This website allows users to collaborate on different movies or TV shows.
 
-Live app at [https://imdb.circuitsandbox.net](https://imdb.circuitsandbox.net/)
+Live app at [https://imdb-dot-atos-ucc-circuit-cpaas.appspot.com](https://imdb-dot-atos-ucc-circuit-cpaas.appspot.com/)
 
 Medium article at [https://medium.com/@rurscheler/imdb-collaboration-bot-c43fa577b6e5](https://medium.com/@rurscheler/imdb-collaboration-bot-c43fa577b6e5)
 
