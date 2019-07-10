@@ -2,7 +2,8 @@
   "circuit": {
     "client_id": "c29d70e7db9045e7b9a079aaf8123e61",
     "client_secret": "bdfa12eee8c848a7b3882de0759711d7",
-    "domain": "circuitsandbox.net"
+    "domain": "circuitsandbox.net",
+    "scope": "READ_CONVERSATIONS,READ_USER,READ_USER_PROFILE,WRITE_CONVERSATIONS,"
   },
   "omdbapikey": "1c319cef"
 }
