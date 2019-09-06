@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/circuit/imdb-collaboration#readme",
   "dependencies": {
+    "@babel/node": "^7.0.0",
     "babel-plugin-transform-custom-element-classes": "^0.1.0",
     "circuit-sdk": "latest",
     "debounce": "^1.2.0",
@@ -29,10 +30,14 @@
     "lit-html": "^0.7.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-latest": "^6.24.1",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-function-bind": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-loader": "^8.0.2",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^2.30.1",
     "request": "^2.88.0",
