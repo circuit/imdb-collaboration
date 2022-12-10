@@ -26,7 +26,7 @@
     "babel-plugin-transform-custom-element-classes": "^0.1.0",
     "circuit-sdk": "^1.2.8401",
     "debounce": "^1.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "lit-html": "^0.7.1"
   },
   "devDependencies": {
